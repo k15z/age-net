@@ -122,7 +122,7 @@ namespace agenet
                   }
 
                for (int i = 0; i < size [L - 1]; i++)
-                  bkprop [L - 1] [i] = - (T [i] - F [i]) * Utils.dSigmoid (n_node [L - 1] [i]);
+                  bkprop [L - 1] [i] = (T [i] - F [i]) * Utils.dSigmoid (n_node [L - 1] [i]);
                for (int l = L - 2; l >= 0; l--) {
                   for (int j = 0; j < size [l]; j++) {
                      float value = 0.0f;
