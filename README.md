@@ -32,4 +32,4 @@ This project uses a fairly standard feedforward neural network based on the mult
 The inputs are simply the brightness values of each individual pixel in the 54 by 74 images, scaled to a value between 0.0f and 1.0f. No more image preprocessing is performed here... mostly because I don't know how to do it.
 
 ### outputs
-The outputs are encoded by creating a floating point number of size 100, initialized to all 0s. If the expected age was 18, then the 18th values would be set to 1.0f, the 17th and 19th values would be set to 0.5f, and the 16th and 20th values would be set to 0.25f.
+The outputs are encoded by creating a floating point number of size 100, initialized to all 0s. If the expected age was 18, then the 18th values would be set to 1.0f, the 17th and 19th values would be set to 0.3f, and the 16th and 20th values would be set to 0.1f.
