@@ -30,7 +30,7 @@ namespace agenet
 
          Console.WriteLine ("Reading image data set.");
          int n = 0;
-         int N = 70*75;
+         int N = 70*50;
          float[][] input = new float[N][];
          float[][] output = new float[N][];
          for (int age = 16; age <= 85; age++) {

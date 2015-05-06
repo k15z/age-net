@@ -53,7 +53,7 @@ namespace agenet
       const int RESCORE_INTERVAL =   1;
       const float ERROR_MARGIN = 0.44f;
       const float LEARN_RATE =   0.01f;
-      const float BACKUP_RATIO = 0.90f;
+      const float BACKUP_RATIO = 0.80f;
 
       public int L;
       public int[] size;
@@ -133,7 +133,8 @@ namespace agenet
                      bkprop[l][j] = value * Utils.dSigmoid(n_node[l][j]);
                   }
                }
-               Console.Write(n + " ");
+               if (n%100 == 0)
+                  Console.Write(n + " ");
             }
             Console.WriteLine();
 
