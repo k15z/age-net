@@ -38,7 +38,7 @@ namespace agenet
 
       /* Training */
       static void trainNetwork() {
-         network = new Network (new int[]{3996, 999, 333, 7});
+         network = new Network (new int[]{3996, 1331, 696, 7});
 
          Console.WriteLine ("Reading image data set.");
          int n = 0;
