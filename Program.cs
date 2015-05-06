@@ -7,26 +7,38 @@ namespace agenet
    class MainClass
    {
       static Network network;
-      static float[][] table;
 
       public static void Main (string[] args)
       {
-         trainNetwork ();
+         if (args.Length == 0)
+            trainNetwork ();
+         else
+            testNetwork (args[0]);
       }
 
-      static void trainNetwork() {
-         network = new Network (new int[]{3996, 999, 333, 100});
-
-         Console.WriteLine ("Building output table.");
-         table = new float[100][];
-         for (int age = 10; age < 90; age++) {
-            table[age] = new float[100];
-            table [age] [age - 2] = 0.1f;
-            table [age] [age - 1] = 0.3f;
-            table [age] [age] = 1.0f;
-            table [age] [age + 1] = 0.3f;
-            table [age] [age + 2] = 0.1f;
+      /* Testing */
+      static void testNetwork(string saved) {
+         Console.WriteLine ("Restoring network from file.");
+         network = Utils.destringify(new StreamReader(saved));
+         Console.WriteLine ("Ready!");
+         while (true) {
+            string file = Console.ReadLine ();
+            float[] result = network.feed (imageReduce (file));
+            Console.WriteLine (file + " > " + binaryOutput(result));
          }
+      }
+
+      static int binaryOutput(float[] output) {
+         int age = 0;
+         for (int i = 0; i < 7; i++)
+            if (output[i] > 0.5f)
+               age = (age | (1 << i));
+         return age;
+      }
+
+      /* Training */
+      static void trainNetwork() {
+         network = new Network (new int[]{3996, 999, 333, 7});
 
          Console.WriteLine ("Reading image data set.");
          int n = 0;
@@ -37,7 +49,7 @@ namespace agenet
             string[] images = Directory.GetFiles ("img/" + age);
             for (int sample = 1; sample <= 50; sample++) {
                input[n] = imageReduce(images[sample]);
-               output[n] = table[age];
+               output[n] = outputBinary(age);
                n++;
             }
          }
@@ -51,6 +63,13 @@ namespace agenet
             Console.WriteLine ("Uh oh...");
       }
 
+      static float[] outputBinary(int age) {
+         float[] f = new float[7];
+         for (int i = 0; i < 7; i++)
+            f [i] = (age & (1 << i));
+         return f;
+      }
+
       static float[] imageReduce(string file) {
          Image img = Image.FromFile (file);
          Bitmap bmp = new Bitmap (img);
@@ -62,6 +81,5 @@ namespace agenet
             }
          return data;
       }
-
    }
 }
