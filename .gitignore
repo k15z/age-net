@@ -18,3 +18,15 @@ obj/x86/Debug/age-net.csproj.FilesWrittenAbsolute.txt
 obj/x86/Debug/.NETFramework,Version=v4.5.AssemblyAttribute.cs
 
 bin/Debug/age-net/.text
+
+age-net.sln
+
+bin/Debug/age-net/.reloc
+
+bin/Debug/age-net/.rsrc/VERSION/1
+
+bin/Debug/age-net/.sdata
+
+obj/x86/Debug/age-net.exe
+
+obj/x86/Release/age-net.exe
