@@ -26,6 +26,16 @@ namespace agenet
          return x * (1.0f - x);
       }
 
+      public static float arctan (float x)
+      {
+         return (float)Math.Atan(-x);
+      }
+
+      public static float dArctan (float x)
+      {
+         return 1.0f / (1.0f + x*x);
+      }
+
       public static void stringify(StreamWriter o, Network n) {
          o.WriteLine(string.Join (" ", n.size));
          for (int layer = 0; layer < n.L - 1; layer++)
@@ -91,13 +101,20 @@ namespace agenet
       {
          a_node [0] = input;
 
-         for (int l = 1; l < L; l++)
+         for (int l = 1; l < L - 1; l++)
             for (int k = 0; k < size [l]; k++) {
                n_node [l] [k] = 0.0f;
                for (int j = 0; j < size [l - 1]; j++)
                   n_node [l] [k] += a_node [l - 1] [j] * weight [l - 1] [j, k];
                a_node [l] [k] = Utils.sigmoid (n_node [l] [k]);
             }
+
+         for (int i = 0; i < size [L - 1]; i++) {
+            n_node [L - 1] [i] = 0.0f;
+            for (int j = 0; j < size [L - 2]; j++)
+               n_node [L - 1] [i] += a_node [L - 2] [j] * weight [L - 2] [j, i];
+            a_node [L - 1] [i] = Utils.arctan(n_node [L - 1] [i]);
+         }
 
          return a_node [L - 1];
       }
@@ -121,8 +138,11 @@ namespace agenet
                      error += Math.Abs (F [k] - T[k]);
                   }
 
+               // final arctan-based hidden->output training
                for (int i = 0; i < size [L - 1]; i++)
-                  bkprop [L - 1] [i] = (T [i] - F [i]) * Utils.dSigmoid (n_node [L - 1] [i]);
+                  bkprop [L - 1] [i] = - (T [i] - F [i]) * Utils.dArctan (n_node [L - 1] [i]);
+
+               // regular sigmoid-based hidden->output training
                for (int l = L - 2; l >= 0; l--) {
                   for (int j = 0; j < size [l]; j++) {
                      float value = 0.0f;
