@@ -61,7 +61,7 @@ namespace agenet
    {
       const int MAX_ATTEMPT = 10000000;
       const int RESCORE_INTERVAL =   1;
-      const float ERROR_MARGIN = 0.44f;
+      const float ERROR_MARGIN = 0.10f;
       const float LEARN_RATE =   0.01f;
       const float BACKUP_RATIO = 0.80f;
 

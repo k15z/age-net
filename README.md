@@ -23,13 +23,14 @@ This project uses a fairly standard feedforward neural network based on the mult
 
 ```
 3996 input nodes
-999 hidden nodes
-333 hidden nodes
-100 output nodes
+1111 hidden nodes
+999  hidden nodes
+555  hidden nodes
+1    output nodes
 ```
 
 ### inputs
 The inputs are simply the brightness values of each individual pixel in the 54 by 74 images, scaled to a value between 0.0f and 1.0f. No more image preprocessing is performed here... mostly because I don't know how to do it.
 
 ### outputs
-The outputs are simply the age in binary, but in reversed order and with only 7 bits. For example, if the age is 1, then the output would be 1 0 0 0 0 0 0.
+The outputs are simply the age, divided by 100, scaled between -1.5 and 1.5.
